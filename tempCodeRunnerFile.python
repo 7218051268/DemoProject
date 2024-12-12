@@ -1,0 +1,160 @@
+class LibraryManagementSystem:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Library Management System")
+        self.root.geometry("1270x680+0+0")
+        
+        # ========================================= VARIABLES ==========================================
+        self.init_vars()
+
+        lbltitle = Label(self.root, text="LIBRARY MANAGEMENT SYSTEM", bg="powder blue", fg="green", bd=17, relief=RIDGE,
+                         font=("times new roman", 35, "bold"), padx=2, pady=10)
+        lbltitle.pack(side=TOP, fill=X)
+
+        self.create_UI()
+
+    def init_vars(self):
+        """Initializes variables to store user input."""
+        self.member_var = StringVar()
+        self.prn_var = StringVar()
+        self.id_var = StringVar()
+        self.firstname_var = StringVar()
+        self.lastname_var = StringVar()
+        self.address1_var = StringVar()
+        self.address2_var = StringVar()
+        self.postcode_var = StringVar()
+        self.mobile_var = StringVar()
+        self.bookid_var = StringVar()
+        self.booktitle_var = StringVar()
+        self.author_var = StringVar()
+        self.dateborrowed_var = StringVar()
+        self.datedue_var = StringVar()
+        self.daysonbook_var = StringVar()
+        self.latereturnfine_var = StringVar()
+        self.dateoverdue_var = StringVar()
+        self.finalprice_var = StringVar()
+
+    def create_UI(self):
+        """Creates the user interface for the library management system."""
+        frame = Frame(self.root, bd=8, relief=RIDGE, padx=15, bg="powder blue")
+        frame.place(x=0, y=110, width=1270, height=365)
+
+        self.create_left_frame(frame)
+        self.create_right_frame(frame)
+        self.create_buttons_frame()
+
+    def create_left_frame(self, frame):
+        """Creates the left frame for user inputs."""
+        DataFrameLeft = LabelFrame(frame, text="Library Membership Information", bg="powder blue", fg="green", bd=4,
+                                   relief=RIDGE, font=("times new roman", 15, "bold"))
+        DataFrameLeft.place(x=0, y=5, width=670, height=335)
+
+        # Add input fields for membership information
+        self.create_input_fields(DataFrameLeft)
+
+    def create_input_fields(self, parent):
+        """Adds input fields for user information like Member Type, PRN, Name, etc."""
+        input_fields = [
+            ("Member Type", self.member_var, ["Admin staff", "Student", "Lecturer"]),
+            ("PRN NO", self.prn_var),
+            ("ID No", self.id_var),
+            ("First Name", self.firstname_var),
+            ("Last Name", self.lastname_var),
+            ("Address 1", self.address1_var),
+            ("Address 2", self.address2_var),
+            ("Post Code", self.postcode_var),
+            ("Mobile No", self.mobile_var),
+            ("Book Id", self.bookid_var),
+            ("Book Title", self.booktitle_var),
+            ("Author", self.author_var),
+            ("Date Borrowed", self.dateborrowed_var),
+            ("Date Due", self.datedue_var),
+            ("Days on Book", self.daysonbook_var),
+            ("Late Return Fine", self.latereturnfine_var),
+            ("Date Overdue", self.dateoverdue_var),
+            ("Final Price", self.finalprice_var),
+        ]
+
+        for i, (label, var, options=None) in enumerate(input_fields):
+        lbl = Label(parent, bg="powder blue", text=label, font=("arial", 12, "bold"), padx=3, pady=5)
+        lbl.grid(row=i, column=0, sticky=W)
+        if options:
+                entry = ttk.Combobox(parent, font=("arial", 12, "bold"), width=18, state="readonly", textvariable=var)
+                entry["values"] = options
+                entry.grid(row=i, column=1)
+        else:
+                entry = Entry(parent, font=("arial", 13, "bold"), width=20, textvariable=var)
+                entry.grid(row=i, column=1)
+
+    def create_right_frame(self, frame):
+        """Creates the right frame for book details and selection."""
+        DataFrameRight = LabelFrame(frame, text="Book Details", bg="powder blue", fg="green", bd=4, padx=20,
+                                    relief=RIDGE, font=("times new roman", 12, "bold"))
+        DataFrameRight.place(x=680, y=5, width=545, height=335)
+
+        # Textbox to display book details
+        self.txtBox = Text(DataFrameRight, font=("arial", 12, "bold"), width=32, height=15, padx=4, pady=5)
+        self.txtBox.grid(row=0, column=2)
+
+        # Add Listbox with scrollbar for book selection
+        listbox = Listbox(DataFrameRight, font=("arial", 12, "bold"), width=20, height=15)
+        listbox.grid(row=0, column=0, padx=4)
+        listScrollbar = Scrollbar(DataFrameRight)
+        listScrollbar.grid(row=0, column=1, sticky="ns")
+        listScrollbar.config(command=listbox.yview)
+
+        listbox.insert(END, 'Head First Book')
+        listbox.insert(END, 'Learn Python The Hard Way')
+
+        listbox.bind("<<ListboxSelect>>", self.SelectBook)
+
+    def create_buttons_frame(self):
+        """Creates buttons for actions such as Add, Update, Show Data, etc."""
+        Framebutton = Frame(self.root, bd=4, relief=RIDGE, padx=20, bg="powder blue")
+        Framebutton.place(x=0, y=475, width=1270, height=42)
+
+        buttons = [
+            ("Add Data", self.add_data),
+            ("Show Data", self.showData),
+            ("Update", self.update),
+            ("Delete", self.delete),
+            ("Reset", self.reset),
+            ("Exit", self.iExit),
+        ]
+
+        for i, (text, command) in enumerate(buttons):
+            btn = Button(Framebutton, command=command, text=text, font=("arial", 12, "bold"), width=19, bg="blue", fg="white")
+            btn.grid(row=0, column=i)
+
+    def SelectBook(self, event=""):
+        """Select book from the listbox."""
+        # Add logic for selecting books dynamically
+        pass
+
+    def add_data(self):
+        """Adds member data to the database."""
+        pass
+
+    def update(self):
+        """Updates member data in the database."""
+        pass
+
+    def fatch_data(self):
+        """Fetches data from the database and displays in the table."""
+        pass
+
+    def showData(self):
+        """Shows the data in a text box."""
+        pass
+
+    def reset(self):
+        """Resets the form inputs."""
+        pass
+
+    def delete(self):
+        """Deletes member data from the database."""
+        pass
+
+    def iExit(self):
+        """Exits the application."""
+        pass
